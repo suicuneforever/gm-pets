@@ -96,6 +96,11 @@ app.delete(`/post/:id`, async (req, res) => {
   res.json(post);
 });
 
+app.get('/owners', async (req, res) => {
+  const owners = await prisma.owner.findMany({ include: { pets: true } });
+  res.json(owners);
+});
+
 app.get('/users', async (req, res) => {
   const users = await prisma.user.findMany();
   res.json(users);

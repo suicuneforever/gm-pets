@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "baseUrl": "./",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "strict": true,
     "outDir": "dist", // added from prisma example
     "lib": ["esnext", "dom"] // added from prisma example

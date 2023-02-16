@@ -17,7 +17,7 @@ const App: FC = () => {
 
 function getFeed() {
   return useQuery('feed', async () => {
-    const { data } = await axios.get('http://localhost:3000/feed');
+    const { data } = await axios.get('http://localhost:3000/random');
     return data;
   });
 }
@@ -25,7 +25,7 @@ function getFeed() {
 function Feed() {
   const feedQuery = getFeed();
 
-  console.log(feedQuery);
+  console.log('hiiiiiiiiiii', feedQuery);
 
   return <div>Feed</div>;
 }

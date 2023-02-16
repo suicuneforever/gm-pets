@@ -50,14 +50,46 @@ const userData: Prisma.UserCreateInput[] = [
 
 const ownerData: Prisma.OwnerCreateInput[] = [
   {
-    name: 'Dani Jaramillo',
+    name: 'Dani',
     pets: {
       create: [
         {
           name: 'Motley',
+          animal: 'Dog',
+          breed: 'Austrailian Cattle Dog Mix',
+          age: 11,
         },
         {
           name: 'Malachi',
+          animal: 'Dog',
+          breed: 'Chinese Sharpei/Border Collie Mix',
+          age: 12,
+        },
+      ],
+    },
+  },
+  {
+    name: 'Dillon',
+    pets: {
+      create: [
+        {
+          name: 'Xyla',
+          animal: 'Cat',
+          breed: 'Calico',
+          age: 10,
+        },
+      ],
+    },
+  },
+  {
+    name: 'Kris',
+    pets: {
+      create: [
+        {
+          name: 'Monty',
+          animal: 'Dog',
+          breed: 'Jindo',
+          age: 4,
         },
       ],
     },

@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "Owner" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT
+);
+
+-- CreateTable
+CREATE TABLE "Pet" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT,
+    "ownerId" INTEGER NOT NULL,
+    CONSTRAINT "Pet_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "Owner" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);

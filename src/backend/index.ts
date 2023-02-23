@@ -96,10 +96,10 @@ app.use(express.json());
 //   res.json(post);
 // });
 
-// app.get('/owners', async (req, res) => {
-//   const owners = await prisma.owner.findMany({ include: { pets: true } });
-//   res.json(owners);
-// });
+app.get('/owners', async (req, res) => {
+  const owners = await prisma.owner.findMany({ include: { pets: true } });
+  res.json(owners);
+});
 
 // app.get('/random', async (req, res) => {
 //   const petCount = await prisma.pet.count();

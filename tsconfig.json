@@ -4,15 +4,15 @@
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "NodeNext",
+    "moduleResolution": "Nodenext",
+    "esModuleInterop": true,
     "target": "es5",
     "jsx": "react",
-    "esModuleInterop": true,
     "allowJs": true,
     "baseUrl": "./",
-    "moduleResolution": "node",
     "strict": true,
     "outDir": "dist", // added from prisma example
-    "lib": ["esnext", "dom"] // added from prisma example
+    "lib": ["esnext", "dom", "ESNext"] // added from prisma example
   }
 }

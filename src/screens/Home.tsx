@@ -31,7 +31,6 @@ function Home() {
   //     return <span>Error: {error.message}</span>;
   //   }
 
-  // also status === 'success', but "else" logic works, too
   return (
     <>
       {petsQuery.isLoading ? (

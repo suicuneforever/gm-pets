@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { FC } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import GlobalStyles from '../globalStyles.css';
+import GlobalStyles from './globalStyles.css';
+import Home from './screens/Home';
 
 const queryClient = new QueryClient();
 
@@ -10,14 +11,14 @@ const App: FC = () => {
     <QueryClientProvider client={queryClient}>
       <GlobalStyles />
       <div>Hello World</div>
-      <Feed />
+      <Home />
     </QueryClientProvider>
   );
 };
 
 function getFeed() {
   return useQuery('feed', async () => {
-    const { data } = await axios.get('http://localhost:3000/feed');
+    const { data } = await axios.get('http://localhost:3000/owners');
     return data;
   });
 }

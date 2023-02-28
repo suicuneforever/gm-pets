@@ -87,6 +87,14 @@ app.get('/pets', async (req, res) => {
   res.json(pets);
 });
 
+app.get('/pets/random', async (req, res) => {
+  const petCount = await prisma.pet.count();
+  const randomId = Math.floor(Math.random() * petCount) + 1;
+
+  const randomPet = await prisma.pet.findUniqueOrThrow({ where: { id: randomId } });
+  res.json(randomPet);
+});
+
 const server = app.listen(3000, () =>
   console.log(`
 🚀 Server ready at: http://localhost:3000

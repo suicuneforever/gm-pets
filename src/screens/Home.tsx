@@ -3,11 +3,17 @@ import axios, { AxiosResponse } from 'axios';
 import React from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
-// query key - array?
+// query key - array? + useEffect
 // loading vs fetching
 // invalidating queries
 // setting query state
 // optimistic updates
+// using useEffect w RQ
+// debugging
+// started branch and solution branch
+// enabled key
+// onSuccess, onError
+// client state vs server state
 
 function Home() {
   const queryClient = useQueryClient();
@@ -48,3 +54,6 @@ function Home() {
 }
 
 export default Home;
+
+// https://drive.google.com/uc?id=1_JA7hdd39rQS9wYII_s7WJIoUoNtRAwY
+// https://drive.google.com/uc?id=1G-ISkg5WzwEcqUdsZIo47ubbHO4S4VM1

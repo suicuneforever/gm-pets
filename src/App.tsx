@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import GlobalStyles from './globalStyles.css';
 import Home from './screens/Home';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
@@ -12,6 +13,7 @@ const App: FC = () => {
       <GlobalStyles />
       <div>Hello World</div>
       <Home />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };

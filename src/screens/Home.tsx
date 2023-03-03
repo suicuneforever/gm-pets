@@ -3,7 +3,6 @@ import axios, { AxiosResponse } from 'axios';
 import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { storage } from '../backend/index';
 
 // query key - array? + useEffect
 // loading vs fetching
@@ -36,16 +35,16 @@ function Home() {
     axios.get('http://localhost:8080/pets/random').then((res) => res.data),
   );
   
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target;
-    if (files && files[0]) {
-      setPetPhoto(files[0]);
-    }
-  }
+//   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const { files } = e.target;
+//     if (files && files[0]) {
+//       setPetPhoto(files[0]);
+//     }
+//   }
 
-  const handleSubmit = () => {
-    const imageRef = ref(storage);
-  }
+//   const handleSubmit = () => {
+//     const imageRef = ref(storage);
+//   }
 
   if (petsQuery.isLoading) {
     return <span>Loading...</span>;
@@ -67,8 +66,8 @@ function Home() {
         </ul>
       )}
       <span>Random pet: {randomPetQuery.data?.name}</span>
-      <input type="file" onChange={handlePhotoChange}/>
-      <button onClick={handleSubmit}>Submit</button>
+      {/* <input type="file" onChange={handlePhotoChange}/>
+      <button onClick={handleSubmit}>Submit</button> */}
     </>
   );
 }

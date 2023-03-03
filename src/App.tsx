@@ -1,36 +1,15 @@
-import axios from 'axios';
-import React, { FC } from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import GlobalStyles from './globalStyles.css';
-import Home from './screens/Home';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import './App.css'
 
-const queryClient = new QueryClient();
+function App() {
+  const [count, setCount] = useState(0)
 
-const App: FC = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <GlobalStyles />
-      <div>Hello World</div>
-      <Home />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
-  );
-};
-
-function getFeed() {
-  return useQuery('feed', async () => {
-    const { data } = await axios.get('http://localhost:3000/owners');
-    return data;
-  });
+    <div>
+      <span>hi</span>
+    </div>
+  )
 }
 
-function Feed() {
-  const feedQuery = getFeed();
-
-  console.log(feedQuery);
-
-  return <div>Feed</div>;
-}
-
-export default App;
+export default App

@@ -4,15 +4,17 @@
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
+    "module": "commonjs",
+    "target": "es6",
     "jsx": "react",
     "esModuleInterop": true,
     "allowJs": true,
-    "baseUrl": "./",
-    "moduleResolution": "Node",
+    //"baseUrl": "./",
+    "moduleResolution": "node",
     "strict": true,
     "outDir": "dist", // added from prisma example
-    "lib": ["esnext", "dom"] // added from prisma example
+    "lib": ["esnext", "dom"], // added from prisma example,
+    "rootDir": "./src" /* Specify the root folder within your source files. */,
+    "baseUrl": "./src"
   }
 }

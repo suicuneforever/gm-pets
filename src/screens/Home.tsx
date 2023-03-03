@@ -1,7 +1,9 @@
 import { Pet } from '@prisma/client';
 import axios, { AxiosResponse } from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../backend/index';
 
 // query key - array? + useEffect
 // loading vs fetching
@@ -15,8 +17,15 @@ import { useQuery, useQueryClient } from 'react-query';
 // onSuccess, onError
 // client state vs server state
 
+// TODO
+// add random button
+// connect to firebase
+// fix dev watch issue
+// fix backend
+
 function Home() {
   const queryClient = useQueryClient();
+  const [petPhoto, setPetPhoto] = useState<File>();
 
   const petsQuery = useQuery<Pet[]>({
     queryKey: 'pets',
@@ -26,8 +35,17 @@ function Home() {
   const randomPetQuery = useQuery<Pet>('randomPet', () =>
     axios.get('http://localhost:3000/pets/random').then((res) => res.data),
   );
+  
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && files[0]) {
+      setPetPhoto(files[0]);
+    }
+  }
 
-  console.log(petsQuery.data);
+  const handleSubmit = () => {
+    const imageRef = ref(storage);
+  }
 
   if (petsQuery.isLoading) {
     return <span>Loading...</span>;
@@ -49,6 +67,8 @@ function Home() {
         </ul>
       )}
       <span>Random pet: {randomPetQuery.data?.name}</span>
+      <input type="file" onChange={handlePhotoChange}/>
+      <button onClick={handleSubmit}>Submit</button>
     </>
   );
 }

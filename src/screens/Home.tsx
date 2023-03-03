@@ -29,11 +29,11 @@ function Home() {
 
   const petsQuery = useQuery<Pet[]>({
     queryKey: 'pets',
-    queryFn: () => axios.get('http://localhost:3000/pets').then((res) => res.data),
+    queryFn: () => axios.get('http://localhost:8080/pets').then((res) => res.data),
   });
 
   const randomPetQuery = useQuery<Pet>('randomPet', () =>
-    axios.get('http://localhost:3000/pets/random').then((res) => res.data),
+    axios.get('http://localhost:8080/pets/random').then((res) => res.data),
   );
   
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {

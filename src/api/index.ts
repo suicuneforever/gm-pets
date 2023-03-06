@@ -1,6 +1,10 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import express from 'express';
 import cors from 'cors';
+// import { firebaseConfig } from './config/firebaseConfig';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const prisma = new PrismaClient();
 const app = express();
@@ -95,8 +99,8 @@ app.get('/pets/random', async (req, res) => {
   res.json(randomPet);
 });
 
-const server = app.listen(8080, () =>
+const server = app.listen(3000, () =>
   console.log(`
-🚀 Server ready at: http://localhost:8080
+🚀 Server ready at: http://localhost:3000
 ⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`),
 );

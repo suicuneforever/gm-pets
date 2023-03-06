@@ -22,6 +22,7 @@ import { initializeApp } from 'firebase/app';
 // connect to firebase
 // fix dev watch issue
 // fix backend
+// separate FE and BE
 
 function Home() {
   const firebaseConfig = {
@@ -37,7 +38,9 @@ function Home() {
   const firebaseStorage = getStorage(firebaseApp);
 
   const queryClient = useQueryClient();
-  const [petPhoto, setPetPhoto] = useState<File>();
+
+  const [url, setUrl] = useState<string>('');
+  const [petPhoto, setPetPhoto] = useState<Blob | Uint8Array | ArrayBuffer>(new Blob());
 
   const petsQuery = useQuery<Pet[]>({
     queryKey: 'pets',
@@ -48,15 +51,30 @@ function Home() {
     axios.get('http://localhost:3000/pets/random').then((res) => res.data),
   );
 
-  // const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { files } = e.target;
-  //   if (files && files[0]) {
-  //     setPetPhoto(files[0]);
-  //   }
-  // };
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && files[0]) {
+      setPetPhoto(files[0]);
+    }
+  };
 
   const handleSubmit = () => {
-    const imageRef = ref(firebaseStorage);
+    const petPhotoRef = ref(firebaseStorage, 'cat');
+    uploadBytes(petPhotoRef, petPhoto)
+      .then(() => {
+        getDownloadURL(petPhotoRef)
+          .then((url) => {
+            setUrl(url);
+          })
+          .catch((error) => {
+            console.log(error.message, 'error getting photo url');
+          });
+
+        setPetPhoto(new Blob());
+      })
+      .catch((error) => {
+        console.log(error.message, 'error uploading photo');
+      });
   };
 
   if (petsQuery.isLoading) {
@@ -79,8 +97,9 @@ function Home() {
         </ul>
       )}
       <span>Random pet: {randomPetQuery.data?.name}</span>
-      {/* <input type="file" onChange={handlePhotoChange}/>
-      <button onClick={handleSubmit}>Submit</button> */}
+      <input type="file" onChange={handlePhotoChange} />
+      <button onClick={handleSubmit}>Submit</button>
+      <img src={url} />
     </>
   );
 }

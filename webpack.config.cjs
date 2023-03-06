@@ -20,19 +20,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.css', '...'],
-    fallback: {
-      fs: false,
-      // tls: false,
-      net: false,
-      async_hooks: false,
-      // path: false,
-      // zlib: false,
-      // http: false,
-      // https: false,
-      // stream: false,
-      // crypto: false,
-      // assert: false,
-    },
   },
   module: {
     rules: [

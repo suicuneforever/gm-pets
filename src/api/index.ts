@@ -1,6 +1,10 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 import express from 'express';
 import cors from 'cors';
+// import { firebaseConfig } from './config/firebaseConfig';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const prisma = new PrismaClient();
 const app = express();

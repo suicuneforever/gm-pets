@@ -6,10 +6,12 @@ const styledComponentsTransformer = createStyledComponentsTransformer();
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const Dotenv = require('dotenv-webpack');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
+  //target: 'node',
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -17,7 +19,20 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.css', '...'],
+    fallback: {
+      fs: false,
+      // tls: false,
+      net: false,
+      async_hooks: false,
+      // path: false,
+      // zlib: false,
+      // http: false,
+      // https: false,
+      // stream: false,
+      // crypto: false,
+      // assert: false,
+    },
   },
   module: {
     rules: [
@@ -52,10 +67,14 @@ module.exports = {
       template: './src/index.html',
     }),
     new Dotenv({ systemvars: true }),
+    new NodePolyfillPlugin(),
   ].filter(Boolean),
   devServer: {
     historyApiFallback: true,
     hot: true,
   },
   devtool: 'inline-source-map',
+  stats: {
+    errorDetails: true,
+  },
 };

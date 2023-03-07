@@ -10,7 +10,6 @@ const App: FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <GlobalStyles />
-      <div>Hello World</div>
       <Home />
     </QueryClientProvider>
   );

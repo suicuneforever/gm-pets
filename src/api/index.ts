@@ -19,18 +19,6 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 
 app.use(express.json());
 
-// app.post(`/post`, async (req, res) => {
-//   const { title, content, authorEmail } = req.body;
-//   const result = await prisma.post.create({
-//     data: {
-//       title,
-//       content,
-//       author: { connect: { email: authorEmail } },
-//     },
-//   });
-//   res.json(result);
-// });
-
 // app.put('/post/:id/views', async (req, res) => {
 //   const { id } = req.params;
 
@@ -97,6 +85,17 @@ app.get('/pets/random', async (req, res) => {
 
   const randomPet = await prisma.pet.findUniqueOrThrow({ where: { id: randomId } });
   res.json(randomPet);
+});
+
+app.post(`/pet`, async (req, res) => {
+  //const { n } = req.body;
+  //const newPet = pets[0];
+  const result = await prisma.pet.create({
+    data: {
+      ...req.body,
+    },
+  });
+  res.json(result);
 });
 
 const server = app.listen(3000, () =>

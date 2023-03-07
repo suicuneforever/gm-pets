@@ -15,19 +15,4 @@ const App: FC = () => {
   );
 };
 
-function getFeed() {
-  return useQuery('feed', async () => {
-    const { data } = await axios.get('http://localhost:3000/owners');
-    return data;
-  });
-}
-
-function Feed() {
-  const feedQuery = getFeed();
-
-  console.log(feedQuery);
-
-  return <div>Feed</div>;
-}
-
 export default App;

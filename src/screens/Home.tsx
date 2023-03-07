@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
 import { ListItem, PetImage, UnorderedList } from './Home.styled';
+import AddPetForm from '../components/addPetForm/AddPetForm';
 
 // query key - array? + useEffect
 // loading vs fetching
@@ -40,7 +41,9 @@ function Home() {
 
   const queryClient = useQueryClient();
 
+  // TODO
   const [petPhoto, setPetPhoto] = useState<Blob | Uint8Array | ArrayBuffer>(new Blob());
+  const [showPetForm, setShowPetForm] = useState<boolean>(false);
 
   const petsQuery = useQuery<Pet[]>({
     queryKey: ['pets'],
@@ -98,6 +101,10 @@ function Home() {
     randomPetQuery.refetch();
   };
 
+  const toggleAddPetForm = () => {
+    setShowPetForm(!showPetForm);
+  };
+
   if (petsQuery.isLoading) {
     return <span>Loading...</span>;
   }
@@ -123,6 +130,9 @@ function Home() {
       <span>Random pet: {randomPetQuery?.data?.name}</span>
       <input type="file" onChange={handlePhotoChange} />
       <button onClick={handleSubmit}>Submit</button>
+      <br />
+      <button onClick={toggleAddPetForm}>Add Pet</button>
+      <AddPetForm isOpen={showPetForm} toggle={toggleAddPetForm} />
     </>
   );
 }

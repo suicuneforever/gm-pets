@@ -90,9 +90,11 @@ app.get('/pets/random', async (req, res) => {
 app.post(`/pet`, async (req, res) => {
   //const { n } = req.body;
   //const newPet = pets[0];
+  const { age } = req.body;
   const result = await prisma.pet.create({
     data: {
       ...req.body,
+      age: parseInt(age),
     },
   });
   res.json(result);

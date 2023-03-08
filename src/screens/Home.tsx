@@ -59,7 +59,7 @@ function Home() {
   return (
     <>
       <button onClick={toggleAddPetForm}>Add Pet</button>
-      {/* <AddPetForm isOpen={showPetForm} toggle={toggleAddPetForm} /> */}
+      <AddPetForm isOpen={showPetForm} toggle={toggleAddPetForm} />
       {petsQuery.isLoading ? (
         <span>Loading...</span>
       ) : (

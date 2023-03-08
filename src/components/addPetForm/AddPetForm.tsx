@@ -16,6 +16,8 @@ import {
   PhotoContainer,
   Row,
 } from './AddPetForm.styled';
+import useCreatePet from '../../hooks/useCreatePet';
+import usePets from '../../hooks/usePets';
 
 type AddPetFormProps = {
   isOpen: boolean;
@@ -47,14 +49,8 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
   const queryClient = useQueryClient();
   const { register, handleSubmit, watch, reset } = useForm<PetInput>();
   const [petPhotoUrl, setPetPhotoUrl] = useState<string>('');
-
-  const addPetMutation = useMutation({
-    mutationFn: (pet: Partial<Pet>) => axios.post('http://localhost:3000/pet', pet).then((res) => res.data),
-    onSuccess: () => {
-      onClose();
-      queryClient.invalidateQueries(['pets']);
-    },
-  });
+  const [createPet, createPetInfo] = useCreatePet();
+  const petsQuery = usePets();
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -78,14 +74,18 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
     }
   };
 
-  const onSubmit = (data: PetInput) => {
+  const onSubmit = async (data: PetInput) => {
     const petToAdd: PetInput = {
       ...data,
       photoUrl: petPhotoUrl,
       ownerId: 1,
     };
 
-    addPetMutation.mutate(petToAdd);
+    await createPet(petToAdd);
+    petsQuery.fetch();
+    onClose();
+
+    //addPetMutation.mutate(petToAdd);
   };
 
   const onClose = () => {
@@ -94,7 +94,7 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
     toggle();
   };
 
-  if (isOpen) {
+  if (!isOpen) {
     return null;
   }
 

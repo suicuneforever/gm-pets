@@ -20,8 +20,6 @@ import AddPetForm from '../components/addPetForm/AddPetForm';
 // client state vs server state
 
 // TODO
-// add random button
-// connect to firebase
 // fix dev watch issue
 // fix backend
 // separate FE and BE

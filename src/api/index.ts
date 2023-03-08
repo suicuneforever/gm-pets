@@ -19,56 +19,6 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 
 app.use(express.json());
 
-// app.put('/post/:id/views', async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const post = await prisma.post.update({
-//       where: { id: Number(id) },
-//       data: {
-//         viewCount: {
-//           increment: 1,
-//         },
-//       },
-//     });
-
-//     res.json(post);
-//   } catch (error) {
-//     res.json({ error: `Post with ID ${id} does not exist in the database` });
-//   }
-// });
-
-// app.put('/publish/:id', async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const postData = await prisma.post.findUnique({
-//       where: { id: Number(id) },
-//       select: {
-//         published: true,
-//       },
-//     });
-
-//     const updatedPost = await prisma.post.update({
-//       where: { id: Number(id) || undefined },
-//       data: { published: !postData?.published },
-//     });
-//     res.json(updatedPost);
-//   } catch (error) {
-//     res.json({ error: `Post with ID ${id} does not exist in the database` });
-//   }
-// });
-
-// app.delete(`/post/:id`, async (req, res) => {
-//   const { id } = req.params;
-//   const post = await prisma.post.delete({
-//     where: {
-//       id: Number(id),
-//     },
-//   });
-//   res.json(post);
-// });
-
 app.get('/owners', async (req, res) => {
   const owners = await prisma.owner.findMany({ include: { pets: true } });
   res.json(owners);
@@ -88,8 +38,6 @@ app.get('/pets/random', async (req, res) => {
 });
 
 app.post(`/pet`, async (req, res) => {
-  //const { n } = req.body;
-  //const newPet = pets[0];
   const { age } = req.body;
   const result = await prisma.pet.create({
     data: {

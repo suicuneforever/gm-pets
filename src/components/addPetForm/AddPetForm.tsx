@@ -1,11 +1,21 @@
 import { Pet } from '@prisma/client';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
+import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
-import { ModalContainer, ModalOverlay } from './AddPetForm.styled';
+import {
+  Column,
+  ContainerShadow,
+  ModalContainer,
+  ModalOverlay,
+  PetForm,
+  PetPhoto,
+  PhotoContainer,
+  Row,
+} from './AddPetForm.styled';
 
 type AddPetFormProps = {
   isOpen: boolean;
@@ -35,17 +45,13 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
   const firebaseStorage = getStorage(firebaseApp);
 
   const queryClient = useQueryClient();
-  const { register, handleSubmit, watch } = useForm<PetInput>();
-  // TODO
-  const [petPhoto, setPetPhoto] = useState<Blob | Uint8Array | ArrayBuffer>(new Blob());
-  const [photoUrl, setPhotoUrl] = useState<string>('');
-
-  const petName = watch('name');
+  const { register, handleSubmit, watch, reset } = useForm<PetInput>();
+  const [petPhotoUrl, setPetPhotoUrl] = useState<string>('');
 
   const addPetMutation = useMutation({
     mutationFn: (pet: Partial<Pet>) => axios.post('http://localhost:3000/pet', pet).then((res) => res.data),
     onSuccess: () => {
-      toggle();
+      onClose();
       queryClient.invalidateQueries(['pets']);
     },
   });
@@ -53,32 +59,39 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (files && files[0]) {
-      setPetPhoto(files[0]);
+      const file = files[0];
+
+      const petPhotoRef = ref(firebaseStorage, uuidv4());
+      uploadBytes(petPhotoRef, file, { contentType: 'image/jpeg' })
+        .then(() => {
+          getDownloadURL(petPhotoRef)
+            .then((url) => {
+              setPetPhotoUrl(url);
+            })
+            .catch((error) => {
+              console.log(error.message, 'error getting photo url');
+            });
+        })
+        .catch((error) => {
+          console.log(error.message, 'error uploading photo');
+        });
     }
   };
 
-  const onSubmit: SubmitHandler<PetInput> = (data) => {
-    const petPhotoRef = ref(firebaseStorage, petName);
-    uploadBytes(petPhotoRef, petPhoto)
-      .then(() => {
-        getDownloadURL(petPhotoRef)
-          .then((url) => {
-            const petToAdd: PetInput = {
-              ...data,
-              photoUrl: url,
-              ownerId: 1,
-            };
+  const onSubmit = (data: PetInput) => {
+    const petToAdd: PetInput = {
+      ...data,
+      photoUrl: petPhotoUrl,
+      ownerId: 1,
+    };
 
-            addPetMutation.mutate(petToAdd);
-          })
-          .catch((error) => {
-            console.log(error.message, 'error getting photo url');
-          });
-        setPetPhoto(new Blob());
-      })
-      .catch((error) => {
-        console.log(error.message, 'error uploading photo');
-      });
+    addPetMutation.mutate(petToAdd);
+  };
+
+  const onClose = () => {
+    reset();
+    setPetPhotoUrl('');
+    toggle();
   };
 
   if (isOpen) {
@@ -86,27 +99,39 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
   }
 
   return (
-    <ModalOverlay onClick={toggle}>
+    <ModalOverlay onClick={onClose}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Pet Name</label>
-          <input {...register('name')} />
-          <label>Animal Type</label>
-          <select {...register('animal')}>
-            <option value="Dog">Dog</option>
-            <option value="Cat">Cat</option>
-            <option value="Rabbit">Rabbit</option>
-            <option value="Reptile">Reptile</option>
-          </select>
-          <label>Breed</label>
-          <input {...register('breed')} />
-          <label>Age</label>
-          <input type="number" {...register('age')} />
-          <input type="file" onChange={handlePhotoChange} />
-          <button type="submit">Submit</button>
-        </form>
-        <button onClick={toggle}>Close</button>
+        <h2>Add a pet</h2>
+        <Row>
+          <Column>
+            <PetForm onSubmit={handleSubmit(onSubmit)}>
+              <label>Pet Name</label>
+              <input {...register('name')} />
+              <label>Animal Type</label>
+              <select {...register('animal')}>
+                <option value="Dog">Dog</option>
+                <option value="Cat">Cat</option>
+                <option value="Rabbit">Rabbit</option>
+                <option value="Reptile">Reptile</option>
+              </select>
+              <label>Breed</label>
+              <input {...register('breed')} />
+              <label>Age</label>
+              <input type="number" {...register('age')} />
+              <br />
+              <button type="submit">Submit</button>
+            </PetForm>
+          </Column>
+          <Column>
+            <input type="file" onChange={handlePhotoChange} />
+            <PhotoContainer>
+              <PetPhoto src={petPhotoUrl} />
+            </PhotoContainer>
+          </Column>
+        </Row>
+        <button onClick={onClose}>Close</button>
       </ModalContainer>
+      <ContainerShadow />
     </ModalOverlay>
   );
 }

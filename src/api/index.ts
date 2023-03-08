@@ -1,21 +1,17 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import express from 'express';
 import cors from 'cors';
-// import { firebaseConfig } from './config/firebaseConfig';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 
 const prisma = new PrismaClient();
 const app = express();
 
 const corsOptions = {
   origin: '*',
-  credentials: true, //access-control-allow-credentials:true
+  credentials: true,
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions)); // Use this after the variable declaration
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -27,6 +23,14 @@ app.get('/owners', async (req, res) => {
 app.get('/pets', async (req, res) => {
   const pets = await prisma.pet.findMany();
   res.json(pets);
+});
+
+app.get('/pet/:id', async (req, res) => {
+  const { id } = req.params;
+  const pet = await prisma.pet.findUnique({
+    where: { id: Number(id) },
+  });
+  res.json(pet);
 });
 
 app.get('/pets/random', async (req, res) => {
@@ -42,7 +46,7 @@ app.post(`/pet`, async (req, res) => {
   const result = await prisma.pet.create({
     data: {
       ...req.body,
-      age: parseInt(age),
+      age: Number(age),
     },
   });
   res.json(result);

@@ -12,12 +12,16 @@ const ownerData: Prisma.OwnerCreateInput[] = [
           animal: 'Dog',
           breed: 'Austrailian Cattle Dog Mix',
           age: 11,
+          photoUrl:
+            'https://firebasestorage.googleapis.com/v0/b/gm-pets.appspot.com/o/motley.jpg?alt=media&token=d4b5be67-52de-4587-9253-efd25441051f',
         },
         {
           name: 'Malachi',
           animal: 'Dog',
           breed: 'Chinese Sharpei/Border Collie Mix',
           age: 12,
+          photoUrl:
+            'https://firebasestorage.googleapis.com/v0/b/gm-pets.appspot.com/o/malachi.jpg?alt=media&token=98a3fef1-0c6b-4cd8-9d01-2428ccd16b4e',
         },
       ],
     },
@@ -31,6 +35,8 @@ const ownerData: Prisma.OwnerCreateInput[] = [
           animal: 'Cat',
           breed: 'Calico',
           age: 10,
+          photoUrl:
+            'https://firebasestorage.googleapis.com/v0/b/gm-pets.appspot.com/o/xyla.png?alt=media&token=f05d87b8-b4b1-48f2-b4aa-4310703801b5',
         },
       ],
     },
@@ -44,6 +50,8 @@ const ownerData: Prisma.OwnerCreateInput[] = [
           animal: 'Dog',
           breed: 'Jindo',
           age: 4,
+          photoUrl:
+            'https://firebasestorage.googleapis.com/v0/b/gm-pets.appspot.com/o/monty.jpg?alt=media&token=547d5115-7409-4766-81d1-d916302a9703',
         },
       ],
     },
@@ -52,12 +60,6 @@ const ownerData: Prisma.OwnerCreateInput[] = [
 
 async function main() {
   console.log(`Start seeding ...`);
-  // for (const u of userData) {
-  //   const user = await prisma.user.create({
-  //     data: u,
-  //   });
-  //   console.log(`Created user with id: ${user.id}`);
-  // }
 
   for (const o of ownerData) {
     const owner = await prisma.owner.create({

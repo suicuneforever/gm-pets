@@ -1,34 +1,26 @@
-import axios from 'axios';
 import React, { FC } from 'react';
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import GlobalStyles from './globalStyles.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import Home from './screens/Home';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PetProfile from './screens/petProfile/PetProfile';
+import Header from './components/header/Header';
 
 const queryClient = new QueryClient();
 
 const App: FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <GlobalStyles />
-      <div>Hello World</div>
-      <Home />
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/pet/:petId" element={<PetProfile />} />
+        </Routes>
+      </BrowserRouter>
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };
-
-function getFeed() {
-  return useQuery('feed', async () => {
-    const { data } = await axios.get('http://localhost:3000/owners');
-    return data;
-  });
-}
-
-function Feed() {
-  const feedQuery = getFeed();
-
-  console.log(feedQuery);
-
-  return <div>Feed</div>;
-}
 
 export default App;

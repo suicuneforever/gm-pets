@@ -7,5 +7,4 @@ export default createGlobalStyle`
   #root {
     height: 100vh
   }
-
 `;

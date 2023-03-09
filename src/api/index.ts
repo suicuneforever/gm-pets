@@ -1,85 +1,19 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import express from 'express';
 import cors from 'cors';
-// import { firebaseConfig } from './config/firebaseConfig';
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 
 const prisma = new PrismaClient();
 const app = express();
 
 const corsOptions = {
   origin: '*',
-  credentials: true, //access-control-allow-credentials:true
+  credentials: true,
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions)); // Use this after the variable declaration
+app.use(cors(corsOptions));
 
 app.use(express.json());
-
-// app.post(`/post`, async (req, res) => {
-//   const { title, content, authorEmail } = req.body;
-//   const result = await prisma.post.create({
-//     data: {
-//       title,
-//       content,
-//       author: { connect: { email: authorEmail } },
-//     },
-//   });
-//   res.json(result);
-// });
-
-// app.put('/post/:id/views', async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const post = await prisma.post.update({
-//       where: { id: Number(id) },
-//       data: {
-//         viewCount: {
-//           increment: 1,
-//         },
-//       },
-//     });
-
-//     res.json(post);
-//   } catch (error) {
-//     res.json({ error: `Post with ID ${id} does not exist in the database` });
-//   }
-// });
-
-// app.put('/publish/:id', async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const postData = await prisma.post.findUnique({
-//       where: { id: Number(id) },
-//       select: {
-//         published: true,
-//       },
-//     });
-
-//     const updatedPost = await prisma.post.update({
-//       where: { id: Number(id) || undefined },
-//       data: { published: !postData?.published },
-//     });
-//     res.json(updatedPost);
-//   } catch (error) {
-//     res.json({ error: `Post with ID ${id} does not exist in the database` });
-//   }
-// });
-
-// app.delete(`/post/:id`, async (req, res) => {
-//   const { id } = req.params;
-//   const post = await prisma.post.delete({
-//     where: {
-//       id: Number(id),
-//     },
-//   });
-//   res.json(post);
-// });
 
 app.get('/owners', async (req, res) => {
   const owners = await prisma.owner.findMany({ include: { pets: true } });
@@ -91,12 +25,31 @@ app.get('/pets', async (req, res) => {
   res.json(pets);
 });
 
+app.get('/pet/:id', async (req, res) => {
+  const { id } = req.params;
+  const pet = await prisma.pet.findUnique({
+    where: { id: Number(id) },
+  });
+  res.json(pet);
+});
+
 app.get('/pets/random', async (req, res) => {
   const petCount = await prisma.pet.count();
   const randomId = Math.floor(Math.random() * petCount) + 1;
 
   const randomPet = await prisma.pet.findUniqueOrThrow({ where: { id: randomId } });
   res.json(randomPet);
+});
+
+app.post(`/pet`, async (req, res) => {
+  const { age } = req.body;
+  const result = await prisma.pet.create({
+    data: {
+      ...req.body,
+      age: Number(age),
+    },
+  });
+  res.json(result);
 });
 
 const server = app.listen(3000, () =>

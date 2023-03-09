@@ -33,11 +33,12 @@ model Owner {
 }
 
 model Pet {
-  id      Int @id @default(autoincrement())
-  name    String
-  animal  String
-  breed   String
-  age     Int
-  owner   Owner    @relation(fields: [ownerId], references: [id])
-  ownerId Int
+  id        Int @id @default(autoincrement())
+  name      String
+  animal    String
+  breed     String
+  age       Int
+  owner     Owner    @relation(fields: [ownerId], references: [id])
+  ownerId   Int
+  photoUrl  String
 }

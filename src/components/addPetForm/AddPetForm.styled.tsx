@@ -7,19 +7,20 @@ export const ModalOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(23, 28, 63, 0.7);
+  background: rgba(40, 40, 40, 0.642);
   display: flex;
   justify-content: center;
   align-items: center;
 
   h2 {
-    color: #484ab3;
-    font-family: 'Courier New';
+    color: #0e0e0e;
+    font-family: 'Source Sans Pro', 'Arial', sans-serif;
+    font-weight: bold;
   }
 `;
 
 export const PetForm = styled.form`
-  color: #484ab3;
+  color: #0e0e0e;
   font-family: 'Courier New';
   font-weight: 700;
   font-size: 16px;
@@ -32,10 +33,10 @@ export const PetForm = styled.form`
     background: transparent;
     outline: 0;
     border-width: 0 0 2px;
-    border-color: #484ac5;
-    box-shadow: 0 0 0 0 #484ac5;
+    border-color: #0e0e0e;
+    box-shadow: 0 0 0 0 #0e0e0e;
     box-sizing: border-box;
-    color: #484ab3;
+    color: #0e0e0e;
     font-family: 'Courier New';
     font-weight: 400;
     font-size: 16px;
@@ -46,10 +47,10 @@ export const PetForm = styled.form`
     background: transparent;
     outline: 0;
     border-width: 0 0 2px;
-    border-color: #484ac5;
-    box-shadow: 0 0 0 0 #484ac5;
+    border-color: #0e0e0e;
+    box-shadow: 0 0 0 0 #0e0e0e;
     box-sizing: border-box;
-    color: #484ab3;
+    color: #0e0e0e;
     font-family: 'Courier New';
     font-weight: 400;
     font-size: 16px;
@@ -75,7 +76,7 @@ export const Column = styled.div`
 export const ModalContainer = styled.div`
   display: block;
   margin: 0 10px 10px 0;
-  border: 1px solid #484ab3;
+  border: 1px solid #0e0e0e;
   background: #f9f7ee;
   width: 40%;
   height: 40%;
@@ -88,7 +89,7 @@ export const ModalContainer = styled.div`
 export const ContainerShadow = styled.div`
   margin: 10px 0 0 10px;
   width: calc(100% - 10px);
-  background: #484ab3;
+  background: #0e0e0e;
   width: 40%;
   height: 40%;
   transition: all 0.3s linear;
@@ -98,12 +99,11 @@ export const ContainerShadow = styled.div`
 
 export const PhotoContainer = styled.div`
   display: flex;
-  border: 2px solid #484ab3;
+  border: 2px solid #0e0e0e;
   width: 100%;
   height: 100%;
   margin: 10px 20px 60px 10px;
-  background: rgba(51, 59, 123, 0.642);
-  background-image: radial-gradient(#484ab3 1px, transparent 0);
+  /* background: rgba(74, 74, 74, 0.642); */
   background-size: 3px 3px;
   background-position: -19px -19px;
 `;

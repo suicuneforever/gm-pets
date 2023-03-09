@@ -11,7 +11,7 @@ function usePets() {
   const fetch = async () => {
     setState({ isLoading: true });
     try {
-      const data = await axios.get('http://localhost:3000/pets').then((res) => res.data);
+      const data = await axios.get('http://localhost:3000/petsdsf').then((res) => res.data);
       console.log('data', data);
       console.log('state', state);
       setState({ isSuccess: true, data });

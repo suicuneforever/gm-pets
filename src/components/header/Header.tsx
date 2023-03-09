@@ -1,16 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import AddPetForm from '../addPetForm/AddPetForm';
-import {
-  AddPetButton,
-  Buttons,
-  Divider,
-  HeaderContainer,
-  Heading,
-  HeadingContainer,
-  HomeLink,
-  RandomPetButton,
-} from './Header.styled';
+import { AddPetButton, Buttons, Divider, HeaderContainer, Heading, HeadingContainer, HomeLink } from './Header.styled';
 
 function Header() {
   const [showPetForm, setShowPetForm] = useState<boolean>(false);
@@ -28,7 +18,6 @@ function Header() {
         </HomeLink>
         <Buttons>
           <AddPetButton onClick={toggleAddPetForm}>add pet</AddPetButton>
-          <RandomPetButton>random pet</RandomPetButton>
         </Buttons>
       </HeadingContainer>
       <Divider />

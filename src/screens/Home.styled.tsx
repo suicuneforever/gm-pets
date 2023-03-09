@@ -16,9 +16,6 @@ export const ListItem = styled.li`
   flex-grow: 1;
   list-style-type: none;
   margin: 20px;
-  /* position: relative; */
-
-  /* transition: all 0.3s; */
 
   :nth-child(4n + 1) {
     box-shadow: 10px 10px #e93da2;
@@ -62,23 +59,4 @@ export const PetImage = styled.img`
   min-width: 100%;
   object-fit: cover;
   vertical-align: bottom;
-  /* position: absolute; */
-`;
-
-export const ListItemShadow = styled.div`
-  margin: 10px 0 0 10px;
-  /* width: calc(100% - 10px); */
-  background: #484ab3;
-  /* transition: all 0.3s linear; */
-  /* position: absolute; */
-  /* padding: 30px; */
-  z-index: -1;
-
-  height: 100%;
-  width: 100%;
-  /* position: absolute; */
-
-  /* :nth-child(4n + 1) {
-    padding: 200px;
-  } */
 `;

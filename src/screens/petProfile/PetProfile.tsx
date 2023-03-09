@@ -1,27 +1,44 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import usePet from '../../hooks/usePet';
+import {
+  Column,
+  PetBio,
+  PetInfo,
+  PetLabel,
+  PetName,
+  PetProfileContainer,
+  PetProfileImage,
+  Row,
+} from './PetProfile.styled';
 
 function PetProfile() {
   const { petId } = useParams();
   const petQuery = usePet(petId ?? '');
 
   return (
-    <div>
-      pet profile
-      <Link to={'/'}>Home</Link>
+    <PetProfileContainer>
       {petQuery.isLoading ? (
         <span>Loading...</span>
       ) : petQuery.isError ? (
         petQuery.error.message
       ) : (
-        <div>
-          <h2>{petQuery.data.name}</h2>
-          <p>{petQuery.data.breed}</p>
-          <img src={petQuery.data.photoUrl} />
-        </div>
+        <PetBio>
+          <Row>
+            <PetProfileImage src={petQuery.data.photoUrl} />
+            <Column>
+              <PetName>{petQuery.data.name}</PetName>
+              <PetLabel>Breed:</PetLabel>
+              <PetInfo>{petQuery.data.breed}</PetInfo>
+              <PetLabel>Age:</PetLabel>
+              <PetInfo>{petQuery.data.age}</PetInfo>
+              <PetLabel>About:</PetLabel>
+              <PetInfo>Description</PetInfo>
+            </Column>
+          </Row>
+        </PetBio>
       )}
-    </div>
+    </PetProfileContainer>
   );
 }
 

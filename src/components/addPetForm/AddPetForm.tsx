@@ -47,10 +47,18 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
   const firebaseStorage = getStorage(firebaseApp);
 
   const queryClient = useQueryClient();
-  const { register, handleSubmit, watch, reset } = useForm<PetInput>();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { isValid, isDirty, errors },
+  } = useForm<PetInput>({ mode: 'onChange' });
   const [petPhotoUrl, setPetPhotoUrl] = useState<string>('');
   const [createPet, createPetInfo] = useCreatePet();
   const petsQuery = usePets();
+
+  console.log(errors);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -106,18 +114,18 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
           <Column>
             <PetForm onSubmit={handleSubmit(onSubmit)}>
               <label>Pet Name</label>
-              <input {...register('name')} />
+              <input {...register('name')} required />
               <label>Animal Type</label>
-              <select {...register('animal')}>
+              <select {...register('animal')} required>
                 <option value="Dog">Dog</option>
                 <option value="Cat">Cat</option>
                 <option value="Rabbit">Rabbit</option>
                 <option value="Reptile">Reptile</option>
               </select>
               <label>Breed</label>
-              <input {...register('breed')} />
+              <input {...register('breed')} required />
               <label>Age</label>
-              <input type="number" {...register('age')} />
+              <input type="number" {...register('age')} required />
               <br />
               <button type="submit">Submit</button>
             </PetForm>
@@ -129,7 +137,6 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
             </PhotoContainer>
           </Column>
         </Row>
-        <button onClick={onClose}>Close</button>
       </ModalContainer>
       <ContainerShadow />
     </ModalOverlay>

@@ -1,22 +1,8 @@
-import { Owner, Pet } from '@prisma/client';
+import { Pet } from '@prisma/client';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { initializeApp } from 'firebase/app';
-import {
-  AddPetButton,
-  Buttons,
-  Divider,
-  HomeContainer,
-  HomeHeader,
-  HomeHeading,
-  ListItem,
-  PetImage,
-  RandomPetButton,
-  UnorderedList,
-} from './Home.styled';
-import AddPetForm from '../components/addPetForm/AddPetForm';
+import { useQuery, useQueryClient } from 'react-query';
+import { HomeContainer, ListItem, PetImage, UnorderedList } from './Home.styled';
 import usePets from '../hooks/usePets';
 import { Link } from 'react-router-dom';
 
@@ -58,25 +44,14 @@ function Home() {
     randomPetQuery.refetch();
   };
 
-  const toggleAddPetForm = () => {
-    setShowPetForm(!showPetForm);
-  };
-
   //   if (isError) {
   //     return <span>Error: {error.message}</span>;
   //   }
 
+  console.log('pets query', petsQuery);
+
   return (
     <HomeContainer>
-      <HomeHeader>
-        <HomeHeading>giant machines pets</HomeHeading>
-        <Buttons>
-          <AddPetButton onClick={toggleAddPetForm}>add pet</AddPetButton>
-          <RandomPetButton onClick={handleRandomPet}>random pet</RandomPetButton>
-        </Buttons>
-      </HomeHeader>
-      <Divider />
-      <AddPetForm isOpen={showPetForm} toggle={toggleAddPetForm} />
       {petsQuery.isLoading ? (
         <span>Loading...</span>
       ) : (

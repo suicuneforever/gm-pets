@@ -2,63 +2,7 @@ import styled from 'styled-components';
 
 export const HomeContainer = styled.div`
   background: #f9f7ee;
-  padding: 20px 100px;
-  font-family: 'Source Sans Pro', 'Arial', sans-serif;
-  font-weight: bold;
-`;
-
-export const HomeHeader = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-export const HomeHeading = styled.h1`
-  font-size: 54px;
-  color: #0e0e0e;
-`;
-
-export const Buttons = styled.div`
-  align-self: center;
-`;
-
-export const AddPetButton = styled.a`
-  padding: 15px 25px;
-  height: 20px;
-  background: #0e0e0e;
-  color: #f9f7ee;
-  transition: all 0.3s linear;
-  border: 5px solid #0e0e0e;
-
-  :hover {
-    cursor: pointer;
-    background: #f9f7ee;
-    color: #0e0e0e;
-  }
-`;
-
-export const RandomPetButton = styled.a`
-  margin-left: 10px;
-  padding: 15px 25px;
-  height: 20px;
-  background: #f9f7ee;
-  color: #0e0e0e;
-  transition: all 0.3s linear;
-  border: 5px solid #0e0e0e;
-
-  :hover {
-    cursor: pointer;
-    background: #0e0e0e;
-    color: #f9f7ee;
-  }
-`;
-
-export const Divider = styled.hr`
-  border-width: 5px;
-  border-style: solid;
-  border-color: #0e0e0e;
+  padding: 10px 100px;
 `;
 
 export const UnorderedList = styled.ul`

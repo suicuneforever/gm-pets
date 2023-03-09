@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 function usePets() {
   // step 1: refactor usePets hook
@@ -12,6 +12,8 @@ function usePets() {
     setState({ isLoading: true });
     try {
       const data = await axios.get('http://localhost:3000/pets').then((res) => res.data);
+      console.log('data', data);
+      console.log('state', state);
       setState({ isSuccess: true, data });
     } catch (error) {
       setState({ isError: true, error });
@@ -22,10 +24,13 @@ function usePets() {
     fetch();
   }, []);
 
-  return {
-    ...state,
-    fetch,
-  };
+  return useMemo(
+    () => ({
+      ...state,
+      fetch,
+    }),
+    [state.data, state.isLoading, state.isError, fetch],
+  );
 }
 
 export default usePets;

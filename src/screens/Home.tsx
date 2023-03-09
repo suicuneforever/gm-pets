@@ -4,7 +4,18 @@ import React, { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { initializeApp } from 'firebase/app';
-import { ListItem, PetImage, UnorderedList } from './Home.styled';
+import {
+  AddPetButton,
+  Buttons,
+  Divider,
+  HomeContainer,
+  HomeHeader,
+  HomeHeading,
+  ListItem,
+  PetImage,
+  RandomPetButton,
+  UnorderedList,
+} from './Home.styled';
 import AddPetForm from '../components/addPetForm/AddPetForm';
 import usePets from '../hooks/usePets';
 import { Link } from 'react-router-dom';
@@ -13,7 +24,6 @@ import { Link } from 'react-router-dom';
 // loading vs fetching
 // invalidating queries
 // setting query state
-// optimistic updates
 // using useEffect w RQ
 // debugging
 // started branch and solution branch
@@ -57,8 +67,15 @@ function Home() {
   //   }
 
   return (
-    <>
-      <button onClick={toggleAddPetForm}>Add Pet</button>
+    <HomeContainer>
+      <HomeHeader>
+        <HomeHeading>giant machines pets</HomeHeading>
+        <Buttons>
+          <AddPetButton onClick={toggleAddPetForm}>add pet</AddPetButton>
+          <RandomPetButton onClick={handleRandomPet}>random pet</RandomPetButton>
+        </Buttons>
+      </HomeHeader>
+      <Divider />
       <AddPetForm isOpen={showPetForm} toggle={toggleAddPetForm} />
       {petsQuery.isLoading ? (
         <span>Loading...</span>
@@ -73,9 +90,8 @@ function Home() {
           ))}
         </UnorderedList>
       )}
-      <button onClick={handleRandomPet}>Random Pet</button>
       <span>Random pet: {randomPetQuery?.data?.name}</span>
-    </>
+    </HomeContainer>
   );
 }
 

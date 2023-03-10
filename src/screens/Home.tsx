@@ -8,7 +8,7 @@ function Home() {
   const petsQuery = usePets();
 
   if (petsQuery.isError) {
-    return <span>Error: {petsQuery.error.message}</span>;
+    return <span>Error: {petsQuery.error?.message}</span>;
   }
 
   return (

@@ -1,10 +1,18 @@
 import { Pet } from '@prisma/client';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import React from 'react';
-import { useQuery } from 'react-query';
+export interface UsePetState {
+  isLoading?: boolean;
+  isSuccess?: boolean;
+  isError?: boolean;
+  data?: Pet;
+  error?: unknown;
+}
+
+export type UsePetAction = Partial<UsePetState>;
 
 function usePet(petId: string) {
-  const [state, setState] = React.useReducer((_: any, action: any) => action, {
+  const [state, setState] = React.useReducer<React.Reducer<UsePetState, UsePetAction>>((_, action) => action, {
     isLoading: true,
   });
 

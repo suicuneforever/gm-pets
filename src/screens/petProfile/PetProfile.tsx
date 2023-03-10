@@ -25,15 +25,15 @@ function PetProfile() {
       ) : (
         <PetBio>
           <Row>
-            <PetProfileImage src={petQuery.data.photoUrl} />
+            <PetProfileImage src={petQuery.data?.photoUrl} />
             <Column>
-              <PetName>{petQuery.data.name}</PetName>
+              <PetName>{petQuery.data?.name}</PetName>
               <PetLabel>Breed:</PetLabel>
-              <PetInfo>{petQuery.data.breed}</PetInfo>
+              <PetInfo>{petQuery.data?.breed}</PetInfo>
               <PetLabel>Age:</PetLabel>
-              <PetInfo>{petQuery.data.age}</PetInfo>
+              <PetInfo>{petQuery.data?.age}</PetInfo>
               <PetLabel>About:</PetLabel>
-              <PetInfo>Description</PetInfo>
+              <PetInfo>{petQuery.data?.description}</PetInfo>
             </Column>
           </Row>
         </PetBio>

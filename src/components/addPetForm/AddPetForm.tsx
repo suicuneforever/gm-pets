@@ -16,6 +16,9 @@ import {
 import useCreatePet from '../../hooks/useCreatePet';
 import usePets from '../../hooks/usePets';
 import { firebaseConfig } from '../../config/firebaseConfig';
+import { useMutation, useQueryClient } from 'react-query';
+import { Pet } from '@prisma/client';
+import axios from 'axios';
 
 type AddPetFormProps = {
   isOpen: boolean;
@@ -37,8 +40,7 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
 
   const { register, handleSubmit, reset } = useForm<PetInput>();
   const [petPhotoUrl, setPetPhotoUrl] = useState<string>('');
-  const [createPet, createPetInfo] = useCreatePet();
-  const petsQuery = usePets();
+  const createPet = useCreatePet();
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -69,7 +71,7 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
       ownerId: 1,
     };
 
-    await createPet(petToAdd).then(() => petsQuery.fetch());
+    createPet.mutate(petToAdd);
     onClose();
   };
 

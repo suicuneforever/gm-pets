@@ -14,11 +14,7 @@ import {
   Row,
 } from './AddPetForm.styled';
 import useCreatePet from '../../hooks/useCreatePet';
-import usePets from '../../hooks/usePets';
 import { firebaseConfig } from '../../config/firebaseConfig';
-import { useMutation, useQueryClient } from 'react-query';
-import { Pet } from '@prisma/client';
-import axios from 'axios';
 
 type AddPetFormProps = {
   isOpen: boolean;

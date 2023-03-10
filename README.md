@@ -18,4 +18,5 @@ Styled Components
 
 to start the app you need to run the client and server simultaneously.
 first, run the server in one terminal: npm run dev
+
 next, open a second terminal and run the client: npm run start

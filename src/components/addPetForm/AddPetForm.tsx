@@ -14,7 +14,6 @@ import {
   Row,
 } from './AddPetForm.styled';
 import useCreatePet from '../../hooks/useCreatePet';
-import usePets from '../../hooks/usePets';
 import { firebaseConfig } from '../../config/firebaseConfig';
 
 type AddPetFormProps = {
@@ -37,8 +36,7 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
 
   const { register, handleSubmit, reset } = useForm<PetInput>();
   const [petPhotoUrl, setPetPhotoUrl] = useState<string>('');
-  const [createPet, createPetInfo] = useCreatePet();
-  const petsQuery = usePets();
+  const createPet = useCreatePet();
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -69,7 +67,7 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
       ownerId: 1,
     };
 
-    await createPet(petToAdd).then(() => petsQuery.fetch());
+    createPet.mutate(petToAdd);
     onClose();
   };
 

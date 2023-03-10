@@ -43,6 +43,7 @@ export const PetInfo = styled.div`
   font-family: 'Courier New';
   padding-bottom: 10px;
   font-weight: 200;
+  max-width: 600px;
 `;
 
 export const PetProfileImage = styled.img`

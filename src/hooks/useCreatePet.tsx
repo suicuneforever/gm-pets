@@ -3,14 +3,6 @@ import axios from 'axios';
 import { Pet } from '@prisma/client';
 
 function useCreatePet() {
-  // const addPetMutation = useMutation({
-  //   mutationFn: (pet: Partial<Pet>) => axios.post('http://localhost:3000/pet', pet).then((res) => res.data),
-  //   onSuccess: () => {
-  //     onClose();
-  //     queryClient.invalidateQueries(['pets']);
-  //   },
-  // });
-
   const [state, setState] = React.useReducer((_: any, action: any) => action, {
     isLoading: true,
   });

@@ -33,7 +33,7 @@ function PetProfile() {
               <PetLabel>Age:</PetLabel>
               <PetInfo>{petQuery.data.age}</PetInfo>
               <PetLabel>About:</PetLabel>
-              <PetInfo>Description</PetInfo>
+              <PetInfo>{petQuery.data.description}</PetInfo>
             </Column>
           </Row>
         </PetBio>

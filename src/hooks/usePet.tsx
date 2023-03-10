@@ -4,9 +4,6 @@ import React from 'react';
 import { useQuery } from 'react-query';
 
 function usePet(petId: string) {
-  //   return useQuery<Pet[]>(['pets', petId], () =>
-  //     axios.get(`http://localhost:3000/pet/${petId}`).then((res) => res.data),
-  //   );
   const [state, setState] = React.useReducer((_: any, action: any) => action, {
     isLoading: true,
   });

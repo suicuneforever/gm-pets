@@ -1,11 +1,8 @@
-import { Pet } from '@prisma/client';
-import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { v4 as uuidv4 } from 'uuid';
-import { getStorage, ref, uploadBytes, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import React, { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useForm } from 'react-hook-form';
 import {
   Column,
   ContainerShadow,
@@ -18,6 +15,7 @@ import {
 } from './AddPetForm.styled';
 import useCreatePet from '../../hooks/useCreatePet';
 import usePets from '../../hooks/usePets';
+import { firebaseConfig } from '../../config/firebaseConfig';
 
 type AddPetFormProps = {
   isOpen: boolean;
@@ -34,31 +32,13 @@ type PetInput = {
 };
 
 function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
-  const firebaseConfig = {
-    apiKey: 'AIzaSyDEh8CCteD_iFlx_0EaSPwporg0PqsVONc',
-    authDomain: 'gm-pets.firebaseapp.com',
-    projectId: 'gm-pets',
-    storageBucket: 'gm-pets.appspot.com',
-    messagingSenderId: '553933332765',
-    appId: '1:553933332765:web:d8b040506feb5c706601f4',
-  };
-
   const firebaseApp = initializeApp(firebaseConfig);
   const firebaseStorage = getStorage(firebaseApp);
 
-  const queryClient = useQueryClient();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { isValid, isDirty, errors },
-  } = useForm<PetInput>({ mode: 'onChange' });
+  const { register, handleSubmit, reset } = useForm<PetInput>();
   const [petPhotoUrl, setPetPhotoUrl] = useState<string>('');
   const [createPet, createPetInfo] = useCreatePet();
   const petsQuery = usePets();
-
-  console.log(errors);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -89,11 +69,8 @@ function AddPetForm({ isOpen, toggle }: AddPetFormProps) {
       ownerId: 1,
     };
 
-    await createPet(petToAdd);
-    petsQuery.fetch();
+    await createPet(petToAdd).then(() => petsQuery.fetch());
     onClose();
-
-    //addPetMutation.mutate(petToAdd);
   };
 
   const onClose = () => {
